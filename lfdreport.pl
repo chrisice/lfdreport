@@ -72,6 +72,16 @@ print "Login IP: " . $ip . "\nLogin Type: " . $logintype . "\n\n";
 }
 }
 
+open FILE, "/var/log/lfd.log";
+print color "red";
+print "IPs blocked from SSH:\n\n" . color 'reset';
+while ($failed = <FILE>) {
+if ( $failed =~ /Failed SSH login from ([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).+?Blocked in csf/ ) {
+my $ip = $1;
+print $ip . "\n";
+}
+}
 
+print "\n";
 
 close FILE;
